@@ -1,0 +1,25 @@
+{
+  "name": "agent-relay",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Agent-to-agent collaboration in Discord threads for OpenClaw",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.28"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.3.13"
+  },
+  "devDependencies": {
+    "openclaw": ">=2026.3.13",
+    "typescript": "^5.8.2"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}
