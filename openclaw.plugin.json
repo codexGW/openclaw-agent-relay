@@ -1,0 +1,129 @@
+{
+  "id": "collab",
+  "name": "Agent Collaboration",
+  "description": "Supervised two-agent collaboration in Discord threads with deterministic child runs and cleanup.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "maxTurns": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64,
+        "default": 10,
+        "description": "Default maximum total turns per collaboration."
+      },
+      "turnTimeoutSeconds": {
+        "type": "integer",
+        "minimum": 5,
+        "maximum": 3600,
+        "default": 120,
+        "description": "Per-turn timeout passed to waitForRun(timeoutMs)."
+      },
+      "turnDelayMs": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 60000,
+        "default": 2000,
+        "description": "Delay between turns and the human interjection poll window."
+      },
+      "discordAccountId": {
+        "type": "string",
+        "description": "Discord account to use for thread and webhook operations. Omit to use the configured default."
+      },
+      "threadAutoArchiveMinutes": {
+        "type": "integer",
+        "enum": [60, 1440, 4320, 10080],
+        "default": 1440,
+        "description": "Discord thread auto-archive duration."
+      },
+      "webhookNamePrefix": {
+        "type": "string",
+        "default": "OpenClaw Collab",
+        "description": "Prefix used when creating a fresh webhook for each collaboration."
+      },
+      "relay": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Cross-gateway relay configuration for routing collaboration turns to agents on remote gateways.",
+        "required": ["localGatewayId", "gateways"],
+        "properties": {
+          "localGatewayId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "This gateway's identifier."
+          },
+          "gateways": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Remote gateways reachable via relay.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["gatewayId", "port", "token", "agents"],
+              "properties": {
+                "gatewayId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Unique gateway identifier."
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535,
+                  "description": "Local port the target gateway listens on."
+                },
+                "token": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Gateway auth token for the target."
+                },
+                "agents": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "type": "string", "minLength": 1 },
+                  "description": "Agent IDs hosted on this gateway."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "uiHints": {
+    "maxTurns": {
+      "label": "Default Max Turns",
+      "help": "Upper bound for total turns before the collaboration stops."
+    },
+    "turnTimeoutSeconds": {
+      "label": "Turn Timeout Seconds",
+      "help": "Timeout passed to child-run wait calls.",
+      "advanced": true
+    },
+    "turnDelayMs": {
+      "label": "Turn Delay Milliseconds",
+      "help": "Also doubles as the human interjection collection window.",
+      "advanced": true
+    },
+    "discordAccountId": {
+      "label": "Discord Account ID",
+      "help": "Resolved with resolveDiscordAccount({ cfg, accountId })."
+    },
+    "threadAutoArchiveMinutes": {
+      "label": "Thread Auto Archive",
+      "help": "Discord-supported archive duration for collaboration threads.",
+      "advanced": true
+    },
+    "webhookNamePrefix": {
+      "label": "Webhook Name Prefix",
+      "help": "Each collaboration creates a fresh webhook using this prefix.",
+      "advanced": true
+    },
+    "relay": {
+      "label": "Relay Configuration",
+      "help": "Configure cross-gateway agent routing for collaborations involving agents on different OpenClaw instances.",
+      "advanced": true
+    }
+  }
+}
