@@ -4,15 +4,15 @@ import { createCollabToolFactory } from "./src/tool.js";
 import { UsageRegistry } from "./src/usage-registry.js";
 
 const plugin = {
-  id: "collab",
+  id: "agent-relay",
   name: "Agent Collaboration",
-  description: "Supervised two-agent collaboration in Discord threads.",
+  description: "Agent-to-agent collaboration in Discord threads.",
   configSchema: createCollabPluginConfigSchema(),
   register(api: OpenClawPluginApi) {
     const pluginConfig = parseCollabPluginConfig(api.pluginConfig);
     const usageRegistry = new UsageRegistry(
       api.runtime.logging.getChildLogger({
-        pluginId: "collab",
+        pluginId: "agent-relay",
         subsystem: "usage-registry",
       }),
     );

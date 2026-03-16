@@ -15,7 +15,7 @@ export const DEFAULT_COLLAB_PLUGIN_CONFIG: CollabPluginConfig = {
   turnDelayMs: 2_000,
   // discordAccountId omitted — resolveDiscordAccount uses the configured default
   threadAutoArchiveMinutes: 1440,
-  webhookNamePrefix: "OpenClaw Collab",
+  webhookNamePrefix: "Agent Relay",
 };
 
 function pushIssue(issues: ParseIssue[], path: string, message: string): void {

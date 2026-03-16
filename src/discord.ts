@@ -410,7 +410,7 @@ export async function postStatusMessage(
   const content = [`**${params.title}**`, "", params.body].join("\n");
   return await postWebhookMessage(webhook, {
     threadId: params.threadId,
-    username: "Collab Status",
+    username: "Agent Relay",
     content,
     ...(params.signal ? { signal: params.signal } : {}),
   });

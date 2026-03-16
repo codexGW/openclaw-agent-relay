@@ -81,11 +81,11 @@ export function createCollabToolFactory(
     }
 
     const tool = {
-      name: "collab",
+      name: "agent-relay",
       label: "Collaborate",
       ownerOnly: true,
       description:
-        "Run a supervised two-agent collaboration in a Discord thread. Creates a fresh webhook per collaboration, posts turns chronologically, and cleans up child transcripts on every path.",
+        "Run a two-agent collaboration in a Discord thread. Creates a thread, posts each turn via webhook, and cleans up when done.",
       parameters: CollabToolParametersSchema,
       async execute(toolCallId: string, params: CollabToolParameters, signal?: AbortSignal) {
         const collabId = `collab:${randomUUID()}`;

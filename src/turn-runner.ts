@@ -227,7 +227,7 @@ export class AcpTurnRunner implements TurnRunner {
     timeoutSeconds: number;
   }): Promise<TurnSpawnResult> {
     const runId = `acp:${randomUUID()}`;
-    const promptFile = `/tmp/collab-prompt-${runId}.txt`;
+    const promptFile = `/tmp/agent-relay-prompt-${runId}.txt`;
     const prompt = params.extraSystemPrompt.trim()
       ? `${params.extraSystemPrompt}\n\n${params.message}`
       : params.message;

@@ -1,5 +1,5 @@
 {
-  "id": "collab",
+  "id": "agent-relay",
   "name": "Agent Collaboration",
   "description": "Supervised two-agent collaboration in Discord threads with deterministic child runs and cleanup.",
   "configSchema": {
@@ -39,7 +39,7 @@
       },
       "webhookNamePrefix": {
         "type": "string",
-        "default": "OpenClaw Collab",
+        "default": "Agent Relay",
         "description": "Prefix used when creating a fresh webhook for each collaboration."
       },
       "relay": {

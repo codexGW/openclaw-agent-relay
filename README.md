@@ -25,7 +25,7 @@ Then add this to `~/.openclaw/openclaw.json`. You need to fill in your own gatew
   "plugins": {
     "load": { "paths": ["~/.openclaw/extensions/collab"] },
     "entries": {
-      "collab": {
+      "agent-relay": {
         "enabled": true,
         "config": {
           "maxTurns": 10,
@@ -45,7 +45,7 @@ Then add this to `~/.openclaw/openclaw.json`. You need to fill in your own gatew
     }
   },
   "tools": {
-    "alsoAllow": ["collab"]
+    "alsoAllow": ["agent-relay"]
   }
 }
 ```
@@ -130,7 +130,7 @@ You can participate while a collab is running:
 
 **"Plugin runtime subagent methods..."**: You're missing the relay config. Add the `relay` block shown above and restart.
 
-**Tool doesn't show up**: Add `"collab"` to `tools.alsoAllow`. Without it the agent can't see the tool.
+**Tool doesn't show up**: Add `"agent-relay"` to `tools.alsoAllow`. Without it the agent can't see the tool.
 
 **"must NOT have additional properties"**: You have an old or misspelled key in the collab config. Valid keys are `maxTurns`, `turnTimeoutSeconds`, `turnDelayMs`, `discordAccountId`, `relay`, `threadAutoArchiveMinutes`, and `webhookNamePrefix`.
 
