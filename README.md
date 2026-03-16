@@ -23,6 +23,7 @@ Then add this to `~/.openclaw/openclaw.json`. You need to fill in your own gatew
 ```jsonc
 {
   "plugins": {
+    "allow": ["agent-relay"],
     "load": { "paths": ["~/.openclaw/extensions/collab"] },
     "entries": {
       "agent-relay": {
