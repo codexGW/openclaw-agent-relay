@@ -58,6 +58,7 @@ function buildExtraSystemPrompt(params: {
     "You are participating in a supervised collaboration.",
     `Collaboration ID: ${params.collabId}`,
     `Turn: ${params.turn + 1} of ${params.maxTurns}`,
+    "If the discussion has reached a natural conclusion, include COLLAB_COMPLETE in your response. The collaboration ends when both agents have signaled COLLAB_COMPLETE.",
     "Return only your substantive response. Do not mention internal runtime details, webhooks, or session keys.",
   ].join("\n");
 }
@@ -191,7 +192,8 @@ function buildStartBody(request: CollabRequest, collabId: string): string {
 
 function buildTurnPost(record: TurnRecord): string {
   const header = `**${record.agentId}** — turn ${record.turn + 1} (${record.totalTokens.toLocaleString()} tokens)`;
-  return `${header}\n\n${record.text}`;
+  const text = record.text.replace(/\bCOLLAB_COMPLETE\b/g, "").trim();
+  return `${header}\n\n${text}`;
 }
 
 function buildFinalStatusTitle(state: CollabTerminalState): string {
@@ -369,6 +371,7 @@ export async function runCollaboration(params: {
     });
 
     terminalState = "complete";
+    let collabCompleteSignals: Set<string> | undefined;
 
     for (let turn = 0; turn < params.request.maxTurns; turn += 1) {
       assertNotAborted(params.signal);
@@ -471,6 +474,23 @@ export async function runCollaboration(params: {
           usageIncomplete: usageSource !== "exact",
         };
         budget.recordTurn(turnRecord);
+
+        if (responseText.includes("COLLAB_COMPLETE")) {
+          if (!collabCompleteSignals) {
+            collabCompleteSignals = new Set();
+          }
+          collabCompleteSignals.add(agentId);
+          logger.info("Agent signaled collaboration completion", {
+            turn: turn + 1,
+            agentId,
+            runId,
+            agentsSignaled: Array.from(collabCompleteSignals),
+          });
+          if (collabCompleteSignals.size >= params.request.agents.length) {
+            terminalState = "complete";
+            break;
+          }
+        }
 
         phase = "posting";
         const previousCursorMessageId = cursorMessageId;
