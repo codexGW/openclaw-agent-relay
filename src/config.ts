@@ -1,4 +1,4 @@
-import type { OpenClawPluginConfigSchema } from "openclaw/plugin-sdk/compat";
+import type { OpenClawPluginConfigSchema } from "openclaw/plugin-sdk";
 import { isRecord } from "./helpers.js";
 import type { CollabPluginConfig, RelayConfig, RelayGatewayConfig } from "./types.js";
 
