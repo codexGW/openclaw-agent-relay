@@ -119,7 +119,7 @@ You can participate while a collab is running:
 
 ## You'll need
 
-- OpenClaw 2026.3.13+
+- OpenClaw 2026.3.13+ (tested through 2026.3.22)
 - Discord (this plugin is Discord-only)
 - A Discord bot that can manage webhooks and create threads
 - At least 2 agents in your gateway config
